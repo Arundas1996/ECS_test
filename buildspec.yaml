@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 390402542146.dkr.ecr.us-east-1.amazonaws.com
+      - REPOSITORY_URI=390402542146.dkr.ecr.us-east-1.amazonaws.com/apache-1  # Your ECR URL
+      - IMAGE_TAG=$(date +%Y%m%d%H%M%S)  # Generates a timestamp as a tag
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t $REPOSITORY_URI:$IMAGE_TAG .  # Build the Docker image with the timestamp tag
+  
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image to ECR...
+      - docker push $REPOSITORY_URI:$IMAGE_TAG  # Push the Docker image to ECR
+
+artifacts:
+  files:
+    - '**/*'  # Specify which artifacts to upload
