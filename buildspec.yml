@@ -12,7 +12,9 @@ phases:
       - export DOCKERHUB_USERNAME=giftnature538@gmail.com
       - export DOCKERHUB_PASSWORD=Limited@123
       - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-      - REPOSITORY_URI=390402542146.dkr.ecr.us-east-1.amazonaws.com/apache-1  # Your ECR URL
+      - echo Logging in to ECR...
+      - export REPOSITORY_URI=390402542146.dkr.ecr.us-east-1.amazonaws.com/apache-1
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $REPOSITORY_URI 
       - IMAGE_TAG=$(date +%Y%m%d%H%M%S)  # Generates a timestamp as a tag
       - docker info
 
