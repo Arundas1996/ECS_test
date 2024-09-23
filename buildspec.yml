@@ -8,11 +8,10 @@ env:
 phases:
   pre_build:
     commands:
-      - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 390402542146.dkr.ecr.us-east-1.amazonaws.com
       - echo Logging in to Docker Hub...
+      - export DOCKERHUB_USERNAME=itsupport@aiocdawacs.com
+      - export DOCKERHUB_PASSWORD=Limited@123
       - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-
       - REPOSITORY_URI=390402542146.dkr.ecr.us-east-1.amazonaws.com/apache-1  # Your ECR URL
       - IMAGE_TAG=$(date +%Y%m%d%H%M%S)  # Generates a timestamp as a tag
 
