@@ -1,10 +1,6 @@
 version: 0.2
 
 phases:
-  install:
-    runtime-versions:
-      docker: 20  # Ensure this version matches your requirements
-
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -25,5 +21,4 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG  # Push the Docker image to ECR
 
 artifacts:
-  files:
-    - imagedefinitions.json  # Ensure this file is generated during the build
+  files: imagedefinitions.json  # Adjust if necessary
